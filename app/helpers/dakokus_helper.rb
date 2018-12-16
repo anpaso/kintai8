@@ -1,0 +1,2 @@
+module DakokusHelper
+end

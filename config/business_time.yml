@@ -1,0 +1,21 @@
+business_time:
+  beginning_of_workday: "00:00:00"
+  end_of_workday: "23:59:59"
+  holidays:
+    - Fri, 23 Nov 2018
+
+    - December 24, 2018
+    - January 01, 2019
+    - January 14, 2019
+    - February 11, 2019
+    - March 21, 2019
+    - April 29, 2019
+    - May 03, 2019
+    - May 06, 2019
+
+  work_week:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri

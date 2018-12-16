@@ -1,0 +1,728 @@
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <script type="text/javascript">
+      $(function () {
+        $('#list').tablefix({height: 565, fixRows: 1});
+      });
+    </script>
+
+  </head>
+
+  <body class="production" style="position:relative;left:10px;">
+    <div id="content_body">
+      <div class="" style="position: fixed; top:70px; width:100vw">
+
+        <p style="font-family: メイリオ; font-size:20px;color:#808080	;text-align:right;position:relative;right:150px;font-weight: bold;">勤務一覧 :
+          <%=current_user.name %></p>
+
+        <%# a=t.beginning_of_month %>
+          <%# b=t.end_of_month %>
+            <%# c= ["日","月","火","水","木","金","土"]%>
+              <%# day = (a.strftime("%m/%d")..b.strftime("%m/%d")).to_a %>
+                <%# day2 = (a..b).to_a %>
+                  <%#youbi = (a..b).map(&:wday)%>
+
+                    <%d= Date.today %>
+                      <% c= ["日","月","火","水","木","金","土"]%>
+                        <% days = Time.zone.now.all_month %>
+
+                          <table class="table table-bordered table-condensed">
+                            <thread>
+                              <td style="font-weight: bold;">作業月</td>
+                              <td style="font-weight: bold;">稼働日数</td>
+                              <td style="font-weight: bold;">稼働時間</td>
+                            </thread>
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <%=d.strftime("%Y年%m月")%>
+                                </td>
+                                <td></td>
+                                <td></td>
+
+                              </tr>
+                            </tbody>
+                          </table>
+
+                          <hr style="height: 2px; background-color:#33D933">
+
+                          <table id="list" class="table table-bordered table-condensed" style="width:98%">
+                            <thead>
+                              <tr>
+                                <td style="width:80px;font-weight: bold;">日付</td>
+                                <td style="width:80px;font-weight: bold;">登録</td>
+                                <td style="width:80px;font-weight: bold;">編集</td>
+                                <td style="font-weight: bold;width:196px;">区分</td>
+                                <td style="font-weight: bold;width:196px;">開始</td>
+                                <td style="font-weight: bold;width:196px;">終了</td>
+                                <td style="font-weight: bold;width:196px;">休憩</td>
+                                <td style="font-weight: bold;width:196px;">作業日報</td>
+                                <td style="font-weight: bold;width:196px;">実働時間</td>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+
+                                <% day0 = days.first.since(0.days) %>
+                                  <% unless day0.workday? %>
+                                    <td>
+                                      <h5 style="color:red;"><%= day0.strftime("%m/%d(#{c[day0.wday]})")%></h5>
+                                    </td>
+                                  <% else %>
+                                    <td>
+                                      <h5><%= day0.strftime("%m/%d(#{c[day0.wday]})")%></h5>
+                                    </td>
+                                  <% end %>
+
+                                  <td style="zoom: 0.15;text-align:center;">
+                                    <%= link_to new_schedule_path(d_id: 0 ) do %>
+
+                                    <%= image_tag "icons/pen.png" %>
+                                  <% end %>
+                                </td>
+
+                                <td style="zoom: 0.15;text-align:center;">
+                                  <%= link_to edit_schedule_path(id: 0 ) do %>
+                                  <%= image_tag "icons/edit.png" %>
+                                <% end %>
+                              </td>
+                              <td>
+
+                                    <!--@a.last["selection"]-->
+                                    <!--@a[d_id=0]["selection"]-->
+                              </td>
+
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+
+                            </tr>
+
+                            <tr>
+                              <% day1 = days.first.since(1.days) %>
+                                <% unless day1.workday? %>
+                                  <td>
+                                    <h5 style="color:red;"><%= day1.strftime("%m/%d(#{c[day1.wday]})")%></h5>
+                                  </td>
+                                <% else %>
+                                  <td>
+                                    <h5><%= day1.strftime("%m/%d(#{c[day1.wday]})")%></h5>
+                                  </td>
+                                <% end %>
+                                <td style="zoom: 0.15;text-align:center;">
+                                  <%= link_to new_schedule_path(:id => 1) do %>
+                                  <%= image_tag "icons/pen.png" %>
+                                <% end %>
+                              </td>
+
+                              <td style="zoom: 0.15;text-align:center;">
+                                <%= link_to edit_schedule_path(:id => 1) do %>
+                                <%= image_tag "icons/edit.png" %>
+                              <% end %>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+
+                          <tr>
+                            <% day2 = days.first.since(2.days) %>
+                              <% unless day2.workday? %>
+                                <td>
+                                  <h5 style="color:red;"><%= day2.strftime("%m/%d(#{c[day2.wday]})")%></h5>
+                                </td>
+                              <% else %>
+                                <td>
+                                  <h5><%= day2.strftime("%m/%d(#{c[day2.wday]})")%></h5>
+                                </td>
+                              <% end %>
+                              <td style="zoom: 0.15;text-align:center;">
+                                <%= link_to new_schedule_path(:id => day0.strftime("%m/%d(#{c[day0.wday]})")) do %>
+                                <%= image_tag "icons/pen.png" %>
+                              <% end %>
+                            </td>
+
+                            <td style="zoom: 0.15;text-align:center;">
+                              <%= link_to edit_schedule_path(:id => day0.strftime("%m/%d(#{c[day0.wday]})")) do %>
+                              <%= image_tag "icons/edit.png" %>
+                            <% end %>
+                          </td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+
+                        <tr>
+                          <% day3 = days.first.since(3.days) %>
+                            <% unless day3.workday? %>
+                              <td>
+                                <h5 style="color:red;"><%= day3.strftime("%m/%d(#{c[day3.wday]})")%></h5>
+                              </td>
+                            <% else %>
+                              <td>
+                                <h5><%= day3.strftime("%m/%d(#{c[day3.wday]})")%></h5>
+                              </td>
+                            <% end %>
+                            <td style="zoom: 0.15;text-align:center;">
+                              <%= link_to new_schedule_path(:id => day0.strftime("%m/%d(#{c[day0.wday]})")) do %>
+                              <%= image_tag "icons/pen.png" %>
+                            <% end %>
+                          </td>
+
+                          <td style="zoom: 0.15;text-align:center;">
+                            <%= link_to edit_schedule_path(:id => day0.strftime("%m/%d(#{c[day0.wday]})")) do %>
+                            <%= image_tag "icons/edit.png" %>
+                          <% end %>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+
+                      <tr>
+                        <% day4 = days.first.since(4.days) %>
+                          <% unless day4.workday? %>
+                            <td>
+                              <h5 style="color:red;"><%= day4.strftime("%m/%d(#{c[day4.wday]})")%></h5>
+                            </td>
+                          <% else %>
+                            <td>
+                              <h5><%= day4.strftime("%m/%d(#{c[day4.wday]})")%></h5>
+                            </td>
+                          <% end %>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+
+                        <tr>
+                          <% day5 = days.first.since(5.days) %>
+                            <% unless day5.workday? %>
+                              <td>
+                                <h5 style="color:red;"><%= day5.strftime("%m/%d(#{c[day5.wday]})")%></h5>
+                              </td>
+                            <% else %>
+                              <td>
+                                <h5><%= day5.strftime("%m/%d(#{c[day5.wday]})")%></h5>
+                              </td>
+                            <% end %>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+
+                          <tr>
+                            <% day6 = days.first.since(6.days) %>
+                              <% unless day6.workday? %>
+                                <td>
+                                  <h5 style="color:red;"><%= day6.strftime("%m/%d(#{c[day6.wday]})")%></h5>
+                                </td>
+                              <% else %>
+                                <td>
+                                  <h5><%= day6.strftime("%m/%d(#{c[day6.wday]})")%></h5>
+                                </td>
+                              <% end %>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+
+                            <tr>
+                              <% day7 = days.first.since(7.days) %>
+                                <% unless day7.workday? %>
+                                  <td>
+                                    <h5 style="color:red;"><%= day7.strftime("%m/%d(#{c[day7.wday]})")%></h5>
+                                  </td>
+                                <% else %>
+                                  <td>
+                                    <h5><%= day7.strftime("%m/%d(#{c[day7.wday]})")%></h5>
+                                  </td>
+                                <% end %>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                              </tr>
+
+                              <tr>
+                                <% day8 = days.first.since(8.days) %>
+                                  <% unless day8.workday? %>
+                                    <td>
+                                      <h5 style="color:red;"><%= day8.strftime("%m/%d(#{c[day8.wday]})")%></h5>
+                                    </td>
+                                  <% else %>
+                                    <td>
+                                      <h5><%= day8.strftime("%m/%d(#{c[day8.wday]})")%></h5>
+                                    </td>
+                                  <% end %>
+                                  <td></td>
+                                  <td ></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                </tr>
+
+                                <tr>
+                                  <% day9 = days.first.since(9.days) %>
+                                    <% unless day9.workday? %>
+                                      <td>
+                                        <h5 style="color:red;"><%= day9.strftime("%m/%d(#{c[day9.wday]})")%></h5>
+                                      </td>
+                                    <% else %>
+                                      <td>
+                                        <h5>
+                                          <%= day9.strftime("%m/%d(#{c[day9.wday]})")%></h5>
+                                      </td>
+                                    <% end %>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+                                  </tr>
+                                  <tr>
+                                    <% day10 = days.first.since(10.days) %>
+                                      <% unless day10.workday? %>
+                                        <td>
+                                          <h5 style="color:red;"><%= day10.strftime("%m/%d(#{c[day10.wday]})")%></h5>
+                                        </td>
+                                      <% else %>
+                                        <td>
+                                          <h5>
+                                            <%= day10.strftime("%m/%d(#{c[day10.wday]})")%></h5>
+                                        </td>
+                                      <% end %>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                    </tr>
+
+                                    <tr>
+                                      <% day11 = days.first.since(11.days) %>
+                                        <% unless day11.workday? %>
+                                          <td>
+                                            <h5 style="color:red;"><%= day11.strftime("%m/%d(#{c[day11.wday]})")%></h5>
+                                          </td>
+                                        <% else %>
+                                          <td>
+                                            <h5><%= day11.strftime("%m/%d(#{c[day11.wday]})")%></h5>
+                                          </td>
+                                        <% end %>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+
+                                      </tr>
+
+                                      <tr>
+                                        <% day12 = days.first.since(12.days) %>
+                                          <% unless day12.workday? %>
+                                            <td>
+                                              <h5 style="color:red;"><%= day12.strftime("%m/%d(#{c[day12.wday]})")%></h5>
+                                            </td>
+                                          <% else %>
+                                            <td>
+                                              <h5>
+                                                <%= day12.strftime("%m/%d(#{c[day12.wday]})")%></h5>
+                                            </td>
+                                          <% end %>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+
+                                        </tr>
+                                        <tr>
+                                          <% day13 = days.first.since(13.days) %>
+                                            <% unless day13.workday? %>
+                                              <td>
+                                                <h5 style="color:red;"><%= day13.strftime("%m/%d(#{c[day13.wday]})")%></h5>
+                                              </td>
+                                            <% else %>
+                                              <td>
+                                                <h5>
+                                                  <%= day13.strftime("%m/%d(#{c[day13.wday]})")%></h5>
+                                              </td>
+                                            <% end %>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                          </tr>
+
+                                          <tr>
+                                            <% day14 = days.first.since(14.days) %>
+                                              <% unless day14.workday? %>
+                                                <td>
+                                                  <h5 style="color:red;"><%= day14.strftime("%m/%d(#{c[day14.wday]})")%></h5>
+                                                </td>
+                                              <% else %>
+                                                <td>
+                                                  <h5><%= day14.strftime("%m/%d(#{c[day14.wday]})")%></h5>
+                                                </td>
+                                              <% end %>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                            </tr>
+
+                                            <tr>
+                                              <% day15 = days.first.since(15.days) %>
+                                                <% unless day15.workday? %>
+                                                  <td>
+                                                    <h5 style="color:red;"><%= day15.strftime("%m/%d(#{c[day15.wday]})")%></h5>
+                                                  </td>
+                                                <% else %>
+                                                  <td>
+                                                    <h5>
+                                                      <%= day15.strftime("%m/%d(#{c[day15.wday]})")%></h5>
+                                                  </td>
+                                                <% end %>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                              </tr>
+
+                                              <tr>
+                                                <% day16 = days.first.since(16.days) %>
+                                                  <% unless day16.workday? %>
+                                                    <td>
+                                                      <h5 style="color:red;"><%= day16.strftime("%m/%d(#{c[day16.wday]})")%></h5>
+                                                    </td>
+                                                  <% else %>
+                                                    <td>
+                                                      <h5><%= day16.strftime("%m/%d(#{c[day16.wday]})")%></h5>
+                                                    </td>
+                                                  <% end %>
+                                                  <td></td>
+                                                  <td></td>
+                                                  <td></td>
+                                                  <td></td>
+                                                  <td></td>
+                                                  <td></td>
+                                                </tr>
+
+                                                <tr>
+                                                  <% day17 = days.first.since(17.days) %>
+                                                    <% unless day17.workday? %>
+                                                      <td>
+                                                        <h5 style="color:red;"><%= day17.strftime("%m/%d(#{c[day17.wday]})")%></h5>
+                                                      </td>
+                                                    <% else %>
+                                                      <td>
+                                                        <h5><%= day17.strftime("%m/%d(#{c[day17.wday]})")%></h5>
+                                                      </td>
+                                                    <% end %>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                  </tr>
+
+                                                  <tr>
+                                                    <% day18 = days.first.since(18.days) %>
+                                                      <% unless day18.workday? %>
+                                                        <td>
+                                                          <h5 style="color:red;"><%= day18.strftime("%m/%d(#{c[day18.wday]})")%></h5>
+                                                        </td>
+                                                      <% else %>
+                                                        <td>
+                                                          <h5>
+                                                            <%= day18.strftime("%m/%d(#{c[day18.wday]})")%></h5>
+                                                        </td>
+                                                      <% end %>
+                                                      <td></td>
+                                                      <td></td>
+                                                      <td></td>
+                                                      <td></td>
+                                                      <td></td>
+                                                      <td></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                      <% day19 = days.first.since(19.days) %>
+                                                        <% unless day19.workday? %>
+                                                          <td>
+                                                            <h5 style="color:red;"><%= day19.strftime("%m/%d(#{c[day19.wday]})")%></h5>
+                                                          </td>
+                                                        <% else %>
+                                                          <td>
+                                                            <h5>
+                                                              <%= day19.strftime("%m/%d(#{c[day19.wday]})")%></h5>
+                                                          </td>
+                                                        <% end %>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                      </tr>
+                                                      <tr>
+                                                        <% day20 = days.first.since(20.days) %>
+                                                          <% unless day20.workday? %>
+                                                            <td>
+                                                              <h5 style="color:red;"><%= day20.strftime("%m/%d(#{c[day20.wday]})")%></h5>
+                                                            </td>
+                                                          <% else %>
+                                                            <td>
+                                                              <h5><%= day20.strftime("%m/%d(#{c[day20.wday]})")%></h5>
+                                                            </td>
+                                                          <% end %>
+                                                          <td></td>
+                                                          <td></td>
+                                                          <td></td>
+                                                          <td></td>
+                                                          <td></td>
+                                                          <td></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                          <% day21 = days.first.since(21.days) %>
+                                                            <% unless day21.workday? %>
+                                                              <td>
+                                                                <h5 style="color:red;"><%= day21.strftime("%m/%d(#{c[day21.wday]})")%></h5>
+                                                              </td>
+                                                            <% else %>
+                                                              <td>
+                                                                <h5><%= day.strftime("%m/%d(#{c[day21.wday]})")%></h5>
+                                                              </td>
+                                                            <% end %>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                          </tr>
+
+                                                          <tr>
+                                                            <% day22 = days.first.since(22.days) %>
+                                                              <% unless day22.workday? %>
+                                                                <td>
+                                                                  <h5 style="color:red;"><%= day22.strftime("%m/%d(#{c[day22.wday]})")%></h5>
+                                                                </td>
+                                                              <% else %>
+                                                                <td>
+                                                                  <h5><%= day22.strftime("%m/%d(#{c[day22.wday]})")%></h5>
+                                                                </td>
+                                                              <% end %>
+                                                              <td></td>
+                                                              <td></td>
+                                                              <td></td>
+                                                              <td></td>
+                                                              <td></td>
+                                                              <td></td>
+                                                            </tr>
+
+                                                            <tr>
+                                                              <% day23 = days.first.since(23.days) %>
+                                                                <% unless day23.workday? %>
+                                                                  <td>
+                                                                    <h5 style="color:red;"><%= day23.strftime("%m/%d(#{c[day23.wday]})")%></h5>
+                                                                  </td>
+                                                                <% else %>
+                                                                  <td>
+                                                                    <h5><%= day23.strftime("%m/%d(#{c[day23.wday]})")%></h5>
+                                                                  </td>
+                                                                <% end %>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                              </tr>
+
+                                                              <tr>
+                                                                <% day24 = days.first.since(24.days) %>
+                                                                  <% unless day24.workday? %>
+                                                                    <td>
+                                                                      <h5 style="color:red;"><%= day24.strftime("%m/%d(#{c[day24.wday]})")%></h5>
+                                                                    </td>
+                                                                  <% else %>
+                                                                    <td>
+                                                                      <h5><%= day24.strftime("%m/%d(#{c[day24.wday]})")%></h5>
+                                                                    </td>
+                                                                  <% end %>
+                                                                  <td></td>
+                                                                  <td></td>
+                                                                  <td></td>
+                                                                  <td></td>
+                                                                  <td></td>
+                                                                  <td></td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                  <% day25 = days.first.since(25.days) %>
+                                                                    <% unless day25.workday? %>
+                                                                      <td>
+                                                                        <h5 style="color:red;"><%= day25.strftime("%m/%d(#{c[day25.wday]})")%></h5>
+                                                                      </td>
+                                                                    <% else %>
+                                                                      <td>
+                                                                        <h5><%= day25.strftime("%m/%d(#{c[day25.wday]})")%></<h5>
+                                                                      </td>
+                                                                    <% end %>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                  </tr>
+
+                                                                  <tr>
+                                                                    <% day26 = days.first.since(26.days) %>
+                                                                      <% unless day26.workday? %>
+                                                                        <td>
+                                                                          <h5 style="color:red;"><%= day26.strftime("%m/%d(#{c[day26.wday]})")%></h5>
+                                                                        </td>
+                                                                      <% else %>
+                                                                        <td>
+                                                                          <h5><%= day26.strftime("%m/%d(#{c[day26.wday]})")%></h5>
+                                                                        </td>
+                                                                      <% end %>
+                                                                      <td></td>
+                                                                      <td></td>
+                                                                      <td></td>
+                                                                      <td></td>
+                                                                      <td></td>
+                                                                      <td></td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                      <% day27 = days.first.since(27.days) %>
+                                                                        <% unless day27.workday? %>
+                                                                          <td>
+                                                                            <h5 style="color:red;"><%= day27.strftime("%m/%d(#{c[day27.wday]})")%></h5>
+                                                                          </td>
+                                                                        <% else %>
+                                                                          <td>
+                                                                            <h5>
+                                                                              <%= day27.strftime("%m/%d(#{c[day27.wday]})")%></h5>
+                                                                          </td>
+
+                                                                          <td></td>
+                                                                          <td></td>
+                                                                          <td></td>
+                                                                          <td></td>
+                                                                          <td></td>
+                                                                          <td></td>
+                                                                        <% end %>
+                                                                      </tr>
+
+                                                                      <tr>
+                                                                        <% day28 = days.first.since(28.days) %>
+                                                                          <%if day28.present? %>
+                                                                            <% unless day28.workday? %>
+                                                                              <td>
+                                                                                <h5 style="color:red;"><%= day28.strftime("%m/%d(#{c[day28.wday]})")%></h5>
+                                                                              </td>
+                                                                            <% else %>
+                                                                              <td>
+                                                                                <h5>
+                                                                                  <%= day28.strftime("%m/%d(#{c[day28.wday]})")%></h5>
+                                                                              </td>
+                                                                            <% end %>
+
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                          <% end %>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                          <% day29 = days.first.since(29.days) %>
+                                                                            <%if day29.present? %>
+                                                                              <% unless day29.workday? %>
+                                                                                <td>
+                                                                                  <h5 style="color:red;"><%= day29.strftime("%m/%d(#{c[day29.wday]})")%></h5>
+                                                                                </td>
+                                                                              <% else %>
+                                                                                <td>
+                                                                                  <h5><%= day29.strftime("%m/%d(#{c[day29.wday]})")%></h5>
+                                                                                </td>
+                                                                              <% end %>
+
+                                                                              <td></td>
+                                                                              <td></td>
+                                                                              <td></td>
+                                                                              <td></td>
+                                                                              <td></td>
+                                                                              <td></td>
+                                                                            <% end %>
+                                                                          </tr>
+                                                                          <tr>
+                                                                            <% day30 = days.first.since(30.days) %>
+                                                                              <%if day30.present? %>
+                                                                                <% unless day30.workday? %>
+                                                                                  <td>
+                                                                                    <h5 style="color:red;"><%= day30.strftime("%m/%d(#{c[day30.wday]})")%></h5>
+                                                                                  </td>
+                                                                                <% else %>
+                                                                                  <td>
+                                                                                    <h5><%= day30.strftime("%m/%d(#{c[day30.wday]})")%></h5>
+                                                                                  </td>
+                                                                                <% end %>
+
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                              <% end %>
+                                                                            </tr>
+                                                                          </tbody>
+                                                                        </table>
+                                                                      </div>
+                                                                    </div>
+                                                                  </body>
+                                                                </html>
+                                                                <%= javascript_include_tag 'TableFix.js' %>

@@ -1,0 +1,249 @@
+<html lang="ja">
+  <head>
+    <title>timer</title>
+    <style>
+      td.clock_cell {
+        text-align: center;
+        width: 100%;
+        height: 135px;
+        font-family: YuGothic;
+        font-size: 70pt;
+      }
+      #id_colon {
+        padding: 0 10px;
+      }
+    </style>
+    <script>
+      onload = function () {
+        myTimeprev()
+        setInterval(myTimeprev, 1000);
+      }
+
+      function set2figures(num) {
+        var ret;
+        if (num < 10) {
+          ret = "0" + num;
+        } else {
+          ret = num;
+        }
+        return ret;
+      }
+
+      function myTimeprev() {
+        var Nowymdhms = new Date();
+        var NowYear = Nowymdhms.getFullYear();
+        var NowMon = Nowymdhms.getMonth() + 1;
+        var NowDay = Nowymdhms.getDate();
+        var NowWeek = Nowymdhms.getDay();
+        var NowHour = Nowymdhms.getHours();
+        var NowMin = set2figures(Nowymdhms.getMinutes());
+        var NowSec = set2figures(Nowymdhms.getSeconds());
+        var Week = new Array("日", "月", "火", "水", "木", "金", "土");
+        var myMsg1 = NowYear + "年" + NowMon + "月" + NowDay + "日(" + Week[NowWeek] + ")";
+        var myMsg2 = NowHour;
+        var myMsg3 = NowMin;
+        var myMsg4 = NowSec;
+        document.getElementById('id_now_date').innerText = myMsg1;
+        document.getElementById('id_now_hour').innerText = myMsg2;
+        document.getElementById('id_now_minute').innerText = myMsg3;
+        document.getElementById('id_now_second').innerText = myMsg4;
+      }
+    </script>
+
+    <script type="text/javascript">
+    $(function(){
+        setInterval(function(){
+            $("#id_colon1").fadeOut(500,function(){$(this).fadeIn(500)});
+        },1000);
+    });
+    </script>
+    <script type="text/javascript">
+    $(function(){
+        setInterval(function(){
+            $("#id_colon2").fadeOut(500,function(){$(this).fadeIn(500)});
+        },1000);
+    });
+    </script>
+  </head>
+
+  <body>
+    <div style="	position: relative;top: 50%;left: 50%;transform: translate(-50%, -55%);width:80%;position:absolute;margin: auto;background-color: #fff;border-radius: 8px; border:#5CC632 1px solid;border-width: medium">
+      <table style="width:100%;margin-top: 10px;">
+        <tbody>
+          <tr>
+            <td id="id_dakoku_cell" style=" height:500px; display:block;">
+              <table style="width:100%;height:400px;position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%)">
+                <tbody>
+                  <tr>
+                    <td style="padding-left:180px; padding-right:17px; width:500px;">
+
+                      <table>
+                        <tbody>
+                          <tr>
+                            <td style="padding-bottom:20px;">
+
+                              <table style="width:500px; border-radius:0.5em; border:#999 1px solid;border-width: thin">
+                                <tbody>
+                                  <tr>
+                                    <td style="text-align:center; border:0px solid #000000;">
+
+                                      <table style="width:100%; background-color:#ffffff; border-radius: 0.5em 0.5em 0px 0px / 0.5em 0.5em 0px 0px;">
+                                        <tbody>
+                                          <tr>
+                                            <td id="id_now_date" style=" text-align:center; font-size:20pt; padding-top:15px;"></td>
+                                          </tr>
+
+                                          <tr>
+                                            <td class="clock_cell" style="background-color: rgb(255, 255, 255);">
+                                              <span id="id_now_hour"></span><span id="id_colon1" style="visibility: visible;">:</span>
+                                              <span id="id_now_minute"></span><span id="id_colon2" style="visibility: visible;">:</span>
+                                              <span id="id_now_second"></span>
+                                            </td>
+                                          </tr>
+
+                                          <tr>
+                                            <td id="id_selected_kubun" style="text-align:center; font-size:22pt; padding-bottom:21px;">退勤</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                    <td style="padding-bottom:21px;padding-left:80px;padding-top:46px">
+                      <table>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <table>
+                                <tbody>
+                                  <tr>
+                                    <td>
+
+                                      <fieldset class="login_data_field">
+
+                                        <table>
+                                          <tbody>
+                                            <tr>
+                                              <td>
+
+                                                <table>
+                                                  <tbody>
+                                                    <tr>
+                                                      <tr>
+                                                        <td class="login_data_title_cell"style="text-align:center;">
+                                                          氏名
+                                                        </td>
+                                                        <td class="login_data_cell" style="position:relative; right:-5px;">
+                                                            <%=current_user.name %>
+                                                          </td>
+
+
+                                                      </tr>
+                                                      <tr>
+                                                        <td colspan="2" style="color:#ffffff; text-align:center; padding:5px 10px 8px 13px;">
+                                                          <span style="color:#5f7cae;">
+                                                            <b>打刻ボタンを押してください</b>
+                                                          </span>
+                                                        </td>
+                                                      </tr>
+                                                    </tbody>
+                                                  </table>
+
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <td style="text-align:center; padding-top:10px;">
+                                                  <input type="button" name="dakoku" value="打　　　　刻" class="btn btn-large dakoku_button" style="background: rgb(235, 235, 235); border: none; ">
+                                                </td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+
+                                        </fieldset>
+
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="padding-top:0px; text-align:center;">
+
+                                <fieldset class="main_button_field">
+                                  <table>
+                                    <tbody>
+                                      <tr style="height:43px;">
+                                        <td>
+                                          <input type="hidden" name="main_button">
+                                        </td>
+                                        <td>
+                                          <input type="hidden" name="main_button">
+                                        </td>
+                                      </tr>
+                                      <tr style="height:43px;">
+                                        <td>
+                                          <input type="button" name="main_button" value="出　勤" class="btn btn-default btn-lg active" id="btn-default1" >
+                                        </td>
+                                        <td style="padding-left: 50px;">
+                                          <input type="button" name="main_button" value="退　勤" class="btn btn-default btn-lg active" id="btn-default2">
+                                        </td>
+                                      </tr>
+                                      <tr style="height:43px;">
+                                        <td>
+                                          <input type="hidden" name="main_button">
+                                        </td>
+                                        <td>
+                                          <input type="hidden" name="main_button">
+                                        </td>
+                                      </tr>
+                                      <tr style="height:43px;">
+                                        <td>
+                                          <input type="hidden" name="main_button">
+                                        </td>
+                                        <td>
+                                          <input type="hidden" name="main_button">
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </fieldset>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </body>
+    <script type="text/javascript">
+      $('#btn-default2').on('click',function() {
+          document.getElementById("id_selected_kubun").innerHTML = "退勤";
+           //alert("クリックされました");
+        });
+          </script>
+
+          <script type="text/javascript">
+
+        $('#btn-default1').on('click',function() {
+          document.getElementById("id_selected_kubun").innerHTML = "出勤";
+          //alert("クリックされました");
+        });
+    </script>
+
+  </html>

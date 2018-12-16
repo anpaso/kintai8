@@ -1,0 +1,13 @@
+.demo{
+position: relative;
+width: 100vw;
+  height: 100vh;
+}
+
+#demo1{
+  position: absolute;
+  top:  50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+
+}
